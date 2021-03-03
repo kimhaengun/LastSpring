@@ -7,11 +7,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 //Component(용도 없음), Configuration(설정파일), Service(서비스), Repository(레파지토리), Bean
 
+//RestController, Controllor -> IoC(싱글톤)등록 new PostController(시작시에 Bean으로 등록된 Robot 주입);
 @RestController
 public class PostController {
 	
-	@Autowired
-	private Robot robot; //DI
+	
+	private final Robot robot; //DI
+	
+	public PostController(Robot robot) {
+		super();
+		this.robot = robot;
+		
+	}
+
 	
 	@GetMapping("/")
 	public String home() {
