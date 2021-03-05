@@ -1,15 +1,21 @@
 package com.cos.myjpa.domain.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.cos.myjpa.domain.post.Post;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,4 +37,14 @@ public class User {
 	
 	@CreationTimestamp //자동으로 현재 시간이 들어감.
 	private LocalDateTime createDate;
+	
+	//역방향 매핑
+	//User한명은 Post 여러개와 관계하고있다.
+	@JsonIgnoreProperties({"user"})
+	@OneToMany(mappedBy = "user",fetch = FetchType.LAZY) 
+	//연관된 변수명을 넣어야한다. / 나는 FK의 주인이 아니다.(FK는 user변수명이다.)
+	private List<Post> post;
+	
+//	@Transient
+//	private int value;
 }

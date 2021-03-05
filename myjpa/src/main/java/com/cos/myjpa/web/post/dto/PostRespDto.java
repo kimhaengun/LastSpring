@@ -1,9 +1,8 @@
-package com.cos.myjpa.domain.post;
+package com.cos.myjpa.web.post.dto;
 
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +13,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.cos.myjpa.domain.post.Post;
 import com.cos.myjpa.domain.user.User;
 
 import lombok.AllArgsConstructor;
@@ -22,26 +22,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-//테이블 자동생성
-public class Post {
-	@Id //pk설정
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//Table,auto_increment,Sequence
+
+
+public class PostRespDto {
 	private Long id;
-	@Column(length = 60,nullable = false)
 	private String title;
-	@Lob    //대용량 데이터
 	private String content;
-	
-	//순방향 매핑
-	@ManyToOne(fetch = FetchType.LAZY)  
-	 //  many는 post one은 user 관계를 맺었다//연관관계 맺는방법 (FK의 주인인곳에서 적어야한다.)
-	@JoinColumn(name = "userId")
-	private User user;
-	
-	@CreationTimestamp //자동으로 현재 시간이 들어감.
 	private LocalDateTime createDate;
+	
+	public PostRespDto(Post post) {
+		this.id=post.getId();
+		this.title=post.getTitle();
+		this.content=post.getContent();
+		this.createDate=post.getCreateDate();
+	}
 }
