@@ -36,7 +36,7 @@ public class Post {
 	@Lob    //대용량 데이터
 	private String content;
 	
-	 @ManyToOne(fetch = FetchType.EAGER)  
+	@ManyToOne(fetch = FetchType.EAGER)  
 	 //  many는 post one은 user 관계를 맺었다//연관관계 맺는방법 (FK의 주인인곳에서 적어야한다.)
 	@JoinColumn(name = "userId")
 	private User user;
