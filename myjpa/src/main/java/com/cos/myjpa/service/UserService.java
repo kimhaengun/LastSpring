@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 	private final UserRepository userRepository;
 	
+	@Transactional(readOnly = true)
 	public List<UserRespDto> 전체찾기() {
 		List<User> usersEntity = userRepository.findAll();
 		List<UserRespDto> userRespDtos = new ArrayList<>();
@@ -28,6 +29,7 @@ public class UserService {
 		return userRespDtos;
 	}
 	
+	@Transactional(readOnly = true)
 	public UserRespDto 한건찾기(Long id) {
 		
 		User userEntity = userRepository.findById(id).orElseThrow(()->{
@@ -38,6 +40,7 @@ public class UserService {
 		return userRespDto;
 	}
 	
+	@Transactional(readOnly = true)
 	public User 프로파일(Long id) {
 		User userEntity = userRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("id를 찾을 수 없습니다.");
@@ -53,6 +56,7 @@ public class UserService {
 		return userEntity;
 	}
 	
+	@Transactional(readOnly = true)
 	public User 로그인(UserLoginReqDto userLoginReqDto) {
 		User userEntity = userRepository.findByUsernameAndPassword(userLoginReqDto.getUsername(), userLoginReqDto.getPassword());
 		return userEntity;
