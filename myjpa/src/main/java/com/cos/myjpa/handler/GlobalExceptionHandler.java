@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.myjpa.handler.ex.MyAuthenticationException;
 import com.cos.myjpa.web.dto.CommonRespDto;
 
 @RestController //컨트롤러가 있어야 데이터를 리턴할 수 있다.
@@ -27,5 +28,9 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = EmptyResultDataAccessException.class)
 	public CommonRespDto<?> emptyResultDataAccess(Exception e){
 		return new CommonRespDto<>(-1,e.getMessage(),null);
+	}
+	@ExceptionHandler(value = MyAuthenticationException.class)
+	public CommonRespDto<?> myAuthentication(Exception e){
+		return new CommonRespDto<>(-1,"로그인 후 사용해주세요",null);
 	}
 }
